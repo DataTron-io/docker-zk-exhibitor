@@ -35,8 +35,3 @@ WORKDIR /opt/exhibitor
 EXPOSE 2181 2888 3888 8181
 
 ENTRYPOINT ["bash", "-ex", "/opt/exhibitor/wrapper.sh"]
-
-#ENTRYPOINT ["sleep", "1000000000"]
-
-# TODO - make wrapper.sh run completely and also modify defaults.conf to include backup dir and other variables. Give pr to Dhruv, Zach and Kevin.
-
