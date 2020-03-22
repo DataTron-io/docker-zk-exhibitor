@@ -7,6 +7,12 @@ MAINTAINER Mike Babineau michael.babineau@gmail.com
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
+ADD include/ /opt/exhibitor/
+
+WORKDIR /opt/exhibitor
+
+USER root
+
 # Ref: https://stackoverflow.com/questions/57031649/how-to-install-openjdk-8-jdk-on-debian-10-buster
 RUN apt-get update -y && apt-get install curl maven wget gnupg software-properties-common openjdk-8-jdk-headless openjdk-8-jdk -y \
     && curl -Lo /tmp/zookeeper.tar.gz "https://downloads.apache.org/zookeeper/zookeeper-3.4.14/zookeeper-3.4.14.tar.gz" \
@@ -21,16 +27,6 @@ RUN apt-get update -y && apt-get install curl maven wget gnupg software-properti
     # Remove build-time dependencies
     && apt-get purge -y --auto-remove curl maven wget gnupg software-properties-common \
     && rm -rf /var/lib/apt/lists/*
-
-# Add the wrapper script to setup configs and exec exhibitor
-ADD include/wrapper.sh /opt/exhibitor/wrapper.sh
-
-# Add the optional web.xml for authentication
-ADD include/web.xml /opt/exhibitor/web.xml
-
-USER root
-
-WORKDIR /opt/exhibitor
 
 EXPOSE 2181 2888 3888 8181
 
